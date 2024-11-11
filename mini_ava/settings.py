@@ -115,6 +115,12 @@ REST_FRAMEWORK = {
     ]
 }
 
+STATIC_URL = '/static/'
+
+STATICFILES_DIRS = [
+    BASE_DIR / "static",
+]
+
 AUTH_USER_MODEL = 'autenticacao.Usuario'
 
 MEDIA_URL = '/media/'
