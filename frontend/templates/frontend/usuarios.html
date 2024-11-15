@@ -1,0 +1,37 @@
+{% extends "frontend/base.html" %}
+
+{% block title %}Usuários - Mini-AVA{% endblock %}
+
+{% block content %}
+<section>
+    <header>
+        <h1>Usuários Registrados</h1>
+        <p>Veja todos os usuários cadastrados na plataforma.</p>
+    </header>
+
+    <h2>Lista de Usuários</h2>
+    
+    <table>
+        <thead>
+            <tr>
+                <th>Nome</th>
+                <th>E-mail</th>
+                <th>Data de Cadastro</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for usuario in usuarios %}
+            <tr>
+                <td>{{ usuario.nome }}</td>
+                <td>{{ usuario.email }}</td>
+                <td>{{ usuario.date_joined|date:"d/m/Y" }}</td>
+            </tr>
+            {% empty %}
+            <tr>
+                <td colspan="3">Nenhum usuário registrado no momento.</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</section>
+{% endblock %}

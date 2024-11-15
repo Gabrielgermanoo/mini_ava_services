@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    {% load static %}
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Mini-AVA{% endblock %}</title>
+    <link rel="stylesheet" href="{% static 'frontend/styles.css' %}">
+</head>
+<body>
+    <header>
+        <h1>Mini-AVA</h1>
+        <nav>
+            <ul>
+                <li><a href="/">Início</a></li>
+                <li><a href="/aulas/">Aulas</a></li>
+                <li><a href="/cursos/">Cursos</a></li>
+                <li><a href="/notas/">Notas</a></li>
+                <li><a href="/usuarios/">Usuários</a></li>
+                {% if user.is_authenticated %}
+                    <li><a href="/logout/">Logout</a></li>
+                {% else %}
+                    <li><a href="/login/">Login</a></li>
+                {% endif %}
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        {% block content %}
+        <!-- Conteúdo específico de cada página será renderizado aqui -->
+        {% endblock %}
+    </main>
+
+    <footer>
+        <p>&copy; 2024 Mini-AVA. Todos os direitos reservados.</p>
+    </footer>
+</body>
+</html>

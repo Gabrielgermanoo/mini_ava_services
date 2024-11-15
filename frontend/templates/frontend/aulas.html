@@ -1,0 +1,16 @@
+{% extends "frontend/base.html" %}
+
+{% block title %}Aulas - Mini-AVA{% endblock %}
+
+{% block content %}
+<section>
+    <h2>Lista de Aulas</h2>
+    <ul>
+        {% for aula in aulas %}
+        <li>{{ aula.titulo }} - {{ aula.descricao }}</li>
+        {% empty %}
+        <p>Não há aulas cadastradas no momento.</p>
+        {% endfor %}
+    </ul>
+</section>
+{% endblock %}

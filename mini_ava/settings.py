@@ -90,6 +90,9 @@ DATABASES = {
     }
 }
 
+LOGIN_URL = '/login/'  # Redirecionar para login quando o usuário não estiver autenticado
+LOGIN_REDIRECT_URL = '/'  # Redirecionar após login
+LOGOUT_REDIRECT_URL = '/login/'  # Redirecionar após logout
 
 # Password validation
 # https://docs.djangoproject.com/en/5.1/ref/settings/#auth-password-validators

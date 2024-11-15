@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    {% load static %}
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login - Mini-AVA</title>
+    <link rel="stylesheet" href="{% static 'frontend/styles.css' %}">
+</head>
+<body>
+    <header>
+        <h1>Login - Mini-AVA</h1>
+    </header>
+    <section>
+        <h2>Faça login para acessar o sistema</h2>
+        <form method="post">
+            {% csrf_token %}
+            <label for="username">Usuário:</label>
+            <input type="text" id="username" name="username" required>
+            
+            <label for="password">Senha:</label>
+            <input type="password" id="password" name="password" required>
+            
+            <button type="submit">Entrar</button>
+        </form>
+        {% if form.errors %}
+        <p style="color: red;">Usuário ou senha inválidos!</p>
+        {% endif %}
+    </section>
+</body>
+</html>

@@ -1,0 +1,42 @@
+{% extends "frontend/base.html" %}
+
+{% block title %}Notas - Mini-AVA{% endblock %}
+
+{% block content %}
+<section>
+    <header>
+        <h1>Notas dos Alunos</h1>
+        <p>Acompanhe as notas dos alunos por curso e aula.</p>
+    </header>
+
+    <h2>Lista de Notas</h2>
+    
+    <!-- Exibe a lista de notas. Iteração sobre as notas do contexto -->
+    <table>
+        <thead>
+            <tr>
+                <th>Aluno</th>
+                <th>Curso</th>
+                <th>Aula</th>
+                <th>Nota</th>
+                <th>Data</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for nota in notas %}
+            <tr>
+                <td>{{ nota.aluno.nome }}</td>
+                <td>{{ nota.aula.curso.nome }}</td>
+                <td>{{ nota.aula.titulo }}</td>
+                <td>{{ nota.valor }}</td>
+                <td>{{ nota.data_atribuicao|date:"d/m/Y" }}</td>
+            </tr>
+            {% empty %}
+            <tr>
+                <td colspan="5">Não há notas registradas no momento.</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</section>
+{% endblock %}
