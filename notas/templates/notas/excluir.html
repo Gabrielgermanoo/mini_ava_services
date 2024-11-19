@@ -1,0 +1,17 @@
+{% extends "frontend/base.html" %}
+
+{% block title %}Excluir Nota - Mini-AVA{% endblock %}
+
+{% block content %}
+<h1>Excluir Nota</h1>
+<p>Você tem certeza de que deseja excluir esta nota?</p>
+<p><strong>Aluno:</strong> {{ nota.aluno.nome }}</p>
+<p><strong>Aula:</strong> {{ nota.aula.titulo }}</p>
+<p><strong>Nota:</strong> {{ nota.valor }}</p>
+
+<form method="post">
+    {% csrf_token %}
+    <button type="submit" class="btn">Excluir</button>
+    <a href="{% url 'listar_notas' %}" class="btn">Cancelar</a>
+</form>
+{% endblock %}

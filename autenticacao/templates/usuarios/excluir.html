@@ -1,0 +1,13 @@
+{% extends "frontend/base.html" %}
+
+{% block title %}Excluir Usuário{% endblock %}
+
+{% block content %}
+<h2>Excluir Usuário</h2>
+<p>Tem certeza de que deseja excluir o usuário "{{ usuario.username }}"?</p>
+<form method="post">
+    {% csrf_token %}
+    <button type="submit">Confirmar</button>
+    <a href="{% url 'listar_usuarios' %}">Cancelar</a>
+</form>
+{% endblock %}

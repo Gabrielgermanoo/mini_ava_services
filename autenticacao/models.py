@@ -4,6 +4,8 @@ from django.db import models
 class Usuario(AbstractUser):
     # Qualquer campo personalizado que você queira adicionar
 
+    professor = models.BooleanField(default=False, help_text="Indica se o usuário é um professor.")
+
     groups = models.ManyToManyField(
         Group,
         related_name="usuarios_grupo",  # Nome exclusivo para evitar o conflito

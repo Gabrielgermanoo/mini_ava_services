@@ -1,0 +1,11 @@
+{% extends 'frontend/base.html' %}
+{% block title %}Excluir Aula{% endblock %}
+{% block content %}
+    <h2>Excluir Aula</h2>
+    <p>Você tem certeza que deseja excluir a aula "{{ aula.titulo }}"?</p>
+    <form method="post">
+        {% csrf_token %}
+        <button type="submit">Sim</button>
+        <a href="{% url 'listar_aulas' %}">Não</a>
+    </form>
+{% endblock %}

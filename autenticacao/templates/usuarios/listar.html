@@ -1,0 +1,37 @@
+{% extends "frontend/base.html" %}
+
+{% block title %}Lista de Usuários{% endblock %}
+
+{% block content %}
+<h2>Lista de Usuários</h2>
+<a href="{% url 'adicionar_usuario' %}">Adicionar Novo Usuário</a>
+<table>
+    <thead>
+        <tr>
+            <th>Username</th>
+            <th>Email</th>
+            <th>Nome Completo</th>
+            <th>Grupos</th>
+            <th>Ações</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for usuario in usuarios %}
+        <tr>
+            <td>{{ usuario.username }}</td>
+            <td>{{ usuario.email }}</td>
+            <td>{{ usuario.first_name }} {{ usuario.last_name }}</td>
+            <td>{{ usuario.groups.all|join:", " }}</td>
+            <td>
+                <a href="{% url 'editar_usuario' usuario.id %}">Editar</a> |
+                <a href="{% url 'excluir_usuario' usuario.id %}">Excluir</a>
+            </td>
+        </tr>
+        {% empty %}
+        <tr>
+            <td colspan="5">Nenhum usuário encontrado.</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endblock %}

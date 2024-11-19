@@ -1,0 +1,31 @@
+{% extends 'frontend/base.html' %}
+
+{% block title %}Listar Cursos{% endblock %}
+
+{% block content %}
+<h2>Lista de Cursos</h2>
+<a href="{% url 'adicionar_curso' %}" class="btn">Adicionar Curso</a>
+<table>
+    <thead>
+        <tr>
+            <th>Nome</th>
+            <th>Descrição</th>
+            <th>Carga Horária</th>
+            <th>Ações</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for curso in cursos %}
+        <tr>
+            <td>{{ curso.nome }}</td>
+            <td>{{ curso.descricao }}</td>
+            <td>{{ curso.carga_horaria }}</td>
+            <td>
+                <a href="{% url 'editar_curso' curso.id %}">Editar</a> |
+                <a href="{% url 'excluir_curso' curso.id %}">Excluir</a>
+            </td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endblock %}

@@ -6,6 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{% block title %}Mini-AVA{% endblock %}</title>
     <link rel="stylesheet" href="{% static 'frontend/styles.css' %}">
+    <link rel="stylesheet" href="{% static 'frontend/forms.css' %}">
 </head>
 <body>
     <header>
@@ -18,9 +19,14 @@
                 <li><a href="/notas/">Notas</a></li>
                 <li><a href="/usuarios/">Usuários</a></li>
                 {% if user.is_authenticated %}
-                    <li><a href="/logout/">Logout</a></li>
+                    <li>
+                        <a href="#" onclick="document.getElementById('logout-form').submit();">Logout</a>
+                        <form id="logout-form" action="{% url 'logout' %}" method="post" style="display: none;">
+                            {% csrf_token %}
+                        </form>
+                    </li>
                 {% else %}
-                    <li><a href="/login/">Login</a></li>
+                    <li><a href="{% url 'login' %}">Login</a></li>
                 {% endif %}
             </ul>
         </nav>
