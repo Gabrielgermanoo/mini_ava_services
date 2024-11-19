@@ -21,6 +21,7 @@
                     <td>{{ aula.data }}</td>
                     <td>{{ aula.curso.nome }}</td>
                     <td>
+                        <a href="{% url 'editar_aula' aula.id %}">Editar</a>
                         <a href="{% url 'excluir_aula' aula.id %}">Excluir</a>
                     </td>
                 </tr>

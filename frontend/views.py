@@ -13,6 +13,8 @@ from django.db.models import Q
 from notas.forms import NotaForm 
 from cursos.forms import CursoForm
 from aulas.forms import AulaForm
+from autenticacao.forms import UsuarioForm
+from django.contrib.auth.forms import UserChangeForm
 
 
 @login_required
@@ -25,39 +27,30 @@ def listar_usuarios(request):
 
 @login_required
 def adicionar_usuario(request):
-    """
-    Adiciona um novo usuário.
-    """
     if request.method == 'POST':
-        form = UserCreationForm(request.POST)
-        if form.is_valid():
-            usuario = form.save(commit=False)
-            usuario.save()
-            # Adiciona o usuário a um grupo, se necessário
-            grupo = request.POST.get('grupo')
-            if grupo:
-                grupo_obj = Group.objects.get(name=grupo)
-                usuario.groups.add(grupo_obj)
-            return redirect('listar_usuarios')
-    else:
-        form = UserCreationForm()
-    return render(request, 'usuarios/form.html', {'form': form, 'titulo': 'Adicionar Usuário'})
-
-from django.contrib.auth.forms import UserChangeForm
-
-@login_required
-def editar_usuario(request, pk):
-    """
-    Edita um usuário existente.
-    """
-    usuario = get_object_or_404(Usuario, pk=pk)
-    if request.method == 'POST':
-        form = UserChangeForm(request.POST, instance=usuario)
+        form = UsuarioForm(request.POST)
         if form.is_valid():
             form.save()
             return redirect('listar_usuarios')
     else:
-        form = UserChangeForm(instance=usuario)
+        form = UsuarioForm()
+    return render(request, 'usuarios/form.html', {'form': form, 'titulo': 'Adicionar Usuário'})
+
+@login_required
+def editar_usuario(request, pk):
+    usuario = get_object_or_404(Usuario, pk=pk)
+    if request.method == 'POST':
+        form = UsuarioForm(request.POST, instance=usuario)
+        if form.is_valid():
+            usuario = form.save(commit=False)
+            if form.cleaned_data['password']:  # Atualiza a senha apenas se fornecida
+                usuario.set_password(form.cleaned_data['password'])
+            usuario.save()
+            form.save_m2m()
+            return redirect('listar_usuarios')
+    else:
+        form = UsuarioForm(instance=usuario)
+        form.fields['password'].required = False  # Torna o campo opcional
     return render(request, 'usuarios/form.html', {'form': form, 'titulo': 'Editar Usuário'})
 
 @login_required
@@ -177,8 +170,8 @@ def adicionar_curso(request):
 
 # Editar curso
 @login_required
-def editar_curso(request, curso_id):
-    curso = get_object_or_404(Curso, id=curso_id)
+def editar_curso(request, pk):
+    curso = get_object_or_404(Curso, id=pk)
     if request.method == "POST":
         form = CursoForm(request.POST, instance=curso)
         if form.is_valid():
@@ -190,8 +183,8 @@ def editar_curso(request, curso_id):
 
 # Excluir curso
 @login_required
-def excluir_curso(request, curso_id):
-    curso = get_object_or_404(Curso, id=curso_id)
+def excluir_curso(request, pk):
+    curso = get_object_or_404(Curso, id=pk)
     if request.method == "POST":
         curso.delete()
         return redirect('listar_cursos')
@@ -214,8 +207,8 @@ def adicionar_aula(request):
     return render(request, 'aulas/forms.html', {'form': form})
 
 @login_required
-def editar_aula(request, aula_id):
-    aula = get_object_or_404(Aula, id=aula_id)
+def editar_aula(request, pk):
+    aula = get_object_or_404(Aula, id=pk)
     if request.method == "POST":
         form = AulaForm(request.POST, instance=aula)
         if form.is_valid():
@@ -226,8 +219,8 @@ def editar_aula(request, aula_id):
     return render(request, 'aulas/forms.html', {'form': form, 'aula': aula})
 
 @login_required
-def excluir_aula(request, aula_id):
-    aula = get_object_or_404(Aula, id=aula_id)
+def excluir_aula(request, pk):
+    aula = get_object_or_404(Aula, id=pk)
     if request.method == "POST":
         aula.delete()
         return redirect('listar_aulas')
